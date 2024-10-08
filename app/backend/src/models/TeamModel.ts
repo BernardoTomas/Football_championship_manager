@@ -6,7 +6,13 @@ export default class TeamModel implements ITeamModel {
   private model = SequelizeTeamModel;
 
   async findAll():Promise<ITeam[]> {
-    const dbData = await this.model.findAll({ raw: true });
-    return dbData;
+    const data = await this.model.findAll({ raw: true });
+    return data;
+  }
+
+  async findById(id: number): Promise<ITeam | null> {
+    const data = await this.model.findByPk(id, { raw: true });
+    if (data == null) return null;
+    return data;
   }
 }
