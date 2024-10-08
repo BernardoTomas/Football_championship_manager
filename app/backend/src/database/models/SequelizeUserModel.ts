@@ -44,7 +44,7 @@ User.init({
   },
 }, {
   sequelize: db,
-  modelName: 'teams',
+  modelName: 'users',
   timestamps: false,
 });
 
