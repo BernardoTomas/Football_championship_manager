@@ -3,7 +3,9 @@ import { UserLoginType } from '../Interfaces/IUser';
 import UserModel from '../models/UserModel';
 import { ServiceRes } from '../Interfaces/ServiceResponseTypes';
 import IUserModel, { Token } from '../Interfaces/IUserModel';
-import { createToken } from '../utils/jwt.util';
+import jwt from '../utils/jwt.util';
+
+// const emailRegex = /^\w+@\w+\.\w{2,4}$/;
 
 export default class UserService {
   constructor(
@@ -12,11 +14,14 @@ export default class UserService {
 
   public async login(user: UserLoginType): Promise<ServiceRes<Token>> {
     const loggedUser = await this.userModel.login(user);
-    if (!loggedUser || !compareSync(user.password, loggedUser.password)) {
-      return { status: 'UNAUTHORIZED', data: { message: 'Email ou senha inválidos' } };
+    if (
+      !loggedUser
+      || !compareSync(user.password, loggedUser.password)
+      || user.email !== loggedUser.password) {
+      return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 
-    const token = createToken({ id: Number(loggedUser.id), email: loggedUser.email });
+    const token = jwt.createToken({ id: Number(loggedUser.id), email: loggedUser.email });
 
     return { status: 'SUCCESSFUL', data: { token } };
   }

@@ -17,7 +17,7 @@ const verifyToken = (token: string): PayloadObject => {
   return payload;
 };
 
-export {
+export default {
   createToken,
   verifyToken,
 };
