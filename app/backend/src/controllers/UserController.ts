@@ -14,7 +14,7 @@ export default class UserController {
   }
 
   public static getRole(req: Request, res: Response) {
-    const user = req.body;
+    const { user } = req;
     return res.status(200).json({ role: user.role });
   }
 }

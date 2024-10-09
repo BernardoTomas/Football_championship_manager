@@ -11,11 +11,10 @@ export default class ValidateAuth {
     try {
       const token = authorization.split(' ')[1];
       const user = jwt.verifyToken(token);
-      req.body = user;
-      next();
+      req.user = user;
+      return next();
     } catch (error) {
       return res.status(401).json({ message: 'Token must be a valid token' });
     }
-    return next();
   }
 }
