@@ -2,6 +2,8 @@ import { sign, verify } from 'jsonwebtoken';
 
 export type PayloadObject = {
   id: number,
+  username: string,
+  role: string,
   email: string,
 };
 
