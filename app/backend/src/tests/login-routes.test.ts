@@ -28,9 +28,51 @@ describe('/login endpoint test', () => {
 
     const { status, body } = await chai.request(app).post('/login')
       .send({ email: 'admin@admin.com', password: 'secret_admin' });
-
     const { iat, ...tokenPayload } = decode(body.token) as any;
+
     expect(status).to.equal(200);
     expect(tokenPayload).to.deep.equal({ id: 1, email: 'admin@admin.com' });;
+  });
+
+  it('post /login sem o campo email deve retornar um status 400 uma mensagem de erro', async function () {
+    const { status, body } = await chai.request(app).post('/login')
+      .send({ password: 'senha_nao_importa' });
+
+    expect(status).to.equal(400);
+    expect(body).to.deep.equal({ message: 'All fields must be filled' })
+  });
+
+  it('post /login sem o campo password deve retornar um status 400 uma mensagem de erro', async function () {
+    const { status, body } = await chai.request(app).post('/login')
+      .send({ email: 'email@email.com' });
+
+    expect(status).to.equal(400);
+    expect(body).to.deep.equal({ message: 'All fields must be filled' })
+  });
+
+  it('post /login com password inválido deve retornar um status 401 uma mensagem de erro', async function () {
+    const { status, body } = await chai.request(app).post('/login')
+      .send({ email: 'email@email.com', password: 'erro' });
+
+    expect(status).to.equal(401);
+    expect(body).to.deep.equal({ message: 'Invalid email or password' })
+  });
+
+  it('post /login com email inválido deve retornar um status 401 uma mensagem de erro', async function () {
+    const { status, body } = await chai.request(app).post('/login')
+      .send({ email: 'email', password: 'senha_secreta' });
+
+    expect(status).to.equal(401);
+    expect(body).to.deep.equal({ message: 'Invalid email or password' })
+  });
+
+  it('post /login com email inexistente no banco de dados deve retornar um status 401 e uma mensagem de erro', async function() {
+    sinon.stub(User, 'findOne').resolves();
+
+    const { status, body } = await chai.request(app).post('/login')
+      .send({ email: 'admin@admin.com', password: 'senha_errada' });
+
+    expect(status).to.equal(401);
+    expect(body).to.deep.equal({ message: 'Invalid email or password' });
   });
 });
