@@ -11,7 +11,7 @@ export default class ValidateAuth {
     try {
       const token = authorization.split(' ')[1];
       const user = jwt.verifyToken(token);
-      req.user = user;
+      res.locals = user;
       return next();
     } catch (error) {
       return res.status(401).json({ message: 'Token must be a valid token' });

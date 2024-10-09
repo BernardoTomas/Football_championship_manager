@@ -13,8 +13,8 @@ export default class UserController {
     return res.status(mapStatusHTTP(serviceRes.status)).json(serviceRes.data);
   }
 
-  public static getRole(req: Request, res: Response) {
-    const { user } = req;
+  public static getRole(_req: Request, res: Response) {
+    const user = res.locals;
     return res.status(200).json({ role: user.role });
   }
 }
