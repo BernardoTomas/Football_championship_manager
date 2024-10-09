@@ -15,7 +15,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('/login endpoint test', () => {
-  afterEach(sinon.restore);
+  afterEach(() => sinon.restore());
 
   it('post /login deve retornar um token', async function() {
     sinon.stub(User, 'findOne').resolves({ 

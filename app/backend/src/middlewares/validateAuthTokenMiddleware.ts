@@ -14,7 +14,7 @@ export default class ValidateAuth {
       req.body = user;
       next();
     } catch (error) {
-      res.status(401).json({ message: 'Token must be a valid token' });
+      return res.status(401).json({ message: 'Token must be a valid token' });
     }
     return next();
   }

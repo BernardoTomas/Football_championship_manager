@@ -10,11 +10,11 @@ export default class UserController {
   public async login(req: Request, res: Response) {
     const user = req.body;
     const serviceRes = await this.userService.login(user);
-    res.status(mapStatusHTTP(serviceRes.status)).json(serviceRes.data);
+    return res.status(mapStatusHTTP(serviceRes.status)).json(serviceRes.data);
   }
 
   public static getRole(req: Request, res: Response) {
     const user = req.body;
-    res.status(200).json({ role: user.role });
+    return res.status(200).json({ role: user.role });
   }
 }
