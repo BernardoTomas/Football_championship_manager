@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('/login endpoint test', () => {
+describe('/login endpoint test', function () {
   afterEach(() => sinon.restore());
 
   it('post /login deve retornar um token', async function() {

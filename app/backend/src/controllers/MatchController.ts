@@ -31,4 +31,10 @@ export default class MatchController {
     const serviceRes = await this.matchService.updateMatchScore(newMatchScore, Number(id));
     return res.status(mapStatusHTTP(serviceRes.status)).json(serviceRes.data);
   }
+
+  public async createNewMatch(req: Request, res: Response) {
+    const newMatch = req.body;
+    const serviceRes = await this.matchService.createNewMatch(newMatch);
+    return res.status(mapStatusHTTP(serviceRes.status)).json(serviceRes.data);
+  }
 }

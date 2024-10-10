@@ -6,4 +6,5 @@ export default interface IMatchModel {
   findAllByInProgress(inProgress: boolean): Promise<IMatch[]>;
   updateMatchEnd(id: number): Promise<string | null>;
   updateMatchScore(newMatchScore: MatchScoreReqType, id: number): Promise<string | null>;
+  createNewMatch(newMatch: IMatch): Promise<IMatch>;
 }

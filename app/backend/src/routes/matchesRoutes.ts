@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import MatchController from '../controllers/MatchController';
 import ValidateAuth from '../middlewares/validateAuthTokenMiddleware';
+import ValidateMatchMiddleware from '../middlewares/verifyMatchIdsMiddleware';
 
 const matchController = new MatchController();
 
@@ -26,6 +27,13 @@ router.patch(
   '/:id',
   ValidateAuth.validateAuthToken,
   (req: Request, res: Response) => matchController.updateMatchScore(req, res),
+);
+
+router.post(
+  '/',
+  ValidateAuth.validateAuthToken,
+  ValidateMatchMiddleware.validateIds,
+  (req: Request, res: Response) => matchController.createNewMatch(req, res),
 );
 
 export default router;

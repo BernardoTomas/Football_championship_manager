@@ -44,4 +44,9 @@ export default class MatchModel implements IMatchModel {
 
     return 'Score updated';
   }
+
+  async createNewMatch(newMatch: IMatch): Promise<IMatch> {
+    const createdMatch = await this.model.create({ ...newMatch, inProgress: true });
+    return createdMatch;
+  }
 }

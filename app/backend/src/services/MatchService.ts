@@ -3,10 +3,13 @@ import { ServiceRes } from '../Interfaces/ServiceResponseTypes';
 import IMatchModel from '../Interfaces/IMatchModel';
 import IMatch from '../Interfaces/IMatch';
 import MatchModel from '../models/MatchModel';
+import ITeamModel from '../Interfaces/ITeamModel';
+import TeamModel from '../models/TeamModel';
 
 export default class MatchService {
   constructor(
     private matchModel: IMatchModel = new MatchModel(),
+    private teamModel: ITeamModel = new TeamModel(),
   ) {}
 
   public async getAllMatches(): Promise<ServiceRes<IMatch[]>> {
@@ -42,5 +45,14 @@ export default class MatchService {
       };
     }
     return { status: 'SUCCESSFUL', data: { message: updateMatchRes } };
+  }
+
+  public async createNewMatch(newMatch: IMatch): Promise<ServiceRes<IMatch>> {
+    const allTeams = await this.teamModel.findTwoById(newMatch.homeTeamId, newMatch.awayTeamId);
+    if (!allTeams) {
+      return { status: 'NOT_FOUND', data: { message: 'There is no team with such id!' } };
+    }
+    const createdTeam = await this.matchModel.createNewMatch(newMatch);
+    return { status: 'CREATED', data: createdTeam };
   }
 }

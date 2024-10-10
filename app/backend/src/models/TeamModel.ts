@@ -15,4 +15,9 @@ export default class TeamModel implements ITeamModel {
     if (data == null) return null;
     return data;
   }
+
+  async findTwoById(id1: number, id2: number): Promise<ITeam[] | null> {
+    const data = await this.model.findAll({ where: { id: [id1, id2] } });
+    return data.length === 2 ? data : null;
+  }
 }

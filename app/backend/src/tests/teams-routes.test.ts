@@ -12,10 +12,10 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('/teams endpoint test', () => {
+describe('/teams endpoint test', function () {
   afterEach(sinon.restore);
 
-  it('getAll() deve retornar array de times', async function() {
+  it('get /teams deve retornar array de times', async function() {
     sinon.stub(Team, 'findAll').resolves([{ id: 1, team_name: 'Bahia' }, { id: 2, team_name: 'Cruzeiro' }] as any);
 
     const { status, body } = await chai.request(app).get('/teams');
@@ -24,7 +24,7 @@ describe('/teams endpoint test', () => {
     expect(body).to.deep.equal([{ id: 1, team_name: 'Bahia' }, { id: 2, team_name: 'Cruzeiro' }]);
   });
   
-  it('Quando time com id existir getById() deve retornar um time e ter status 200', async function() {
+  it('get /teams/:id deve retornar um time e ter status 200 quando time com id existir', async function() {
     sinon.stub(Team, 'findByPk').resolves({ id: 1, team_name: 'Bahia' } as any);
 
     const { status, body } = await chai.request(app).get('/teams/1');
@@ -33,7 +33,7 @@ describe('/teams endpoint test', () => {
     expect(body).to.deep.equal({ id: 1, team_name: 'Bahia' });
   })
 
-  it('Quando time com id não existir getById() deve retornar uma mensagem de erro e ter status 404', async function() {
+  it('get /teams/:id deve retornar uma mensagem de erro e ter status 404 quando time com id não existir', async function() {
     sinon.stub(Team, 'findByPk').resolves();
 
     const { status, body } = await chai.request(app).get('/teams/1000');
