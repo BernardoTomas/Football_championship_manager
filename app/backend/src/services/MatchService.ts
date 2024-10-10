@@ -1,3 +1,4 @@
+import { MatchScoreReqType } from '../Interfaces/MatchScoreReqType';
 import { ServiceRes } from '../Interfaces/ServiceResponseTypes';
 import IMatchModel from '../Interfaces/IMatchModel';
 import IMatch from '../Interfaces/IMatch';
@@ -24,6 +25,20 @@ export default class MatchService {
       return {
         status: 'BAD_REQUEST',
         data: { message: 'Match already finished or incorrect id' },
+      };
+    }
+    return { status: 'SUCCESSFUL', data: { message: updateMatchRes } };
+  }
+
+  public async updateMatchScore(
+    newMatchScore: MatchScoreReqType,
+    id: number,
+  ): Promise<ServiceRes<{ message: string }>> {
+    const updateMatchRes = await this.matchModel.updateMatchScore(newMatchScore, id);
+    if (updateMatchRes === null) {
+      return {
+        status: 'BAD_REQUEST',
+        data: { message: 'Incorrect match score or id' },
       };
     }
     return { status: 'SUCCESSFUL', data: { message: updateMatchRes } };

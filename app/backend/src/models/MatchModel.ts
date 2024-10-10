@@ -1,3 +1,4 @@
+import { MatchScoreReqType } from '../Interfaces/MatchScoreReqType';
 import Team from '../database/models/SequelizeTeamModel';
 import IMatch from '../Interfaces/IMatch';
 import IMatchModel from '../Interfaces/IMatchModel';
@@ -34,5 +35,13 @@ export default class MatchModel implements IMatchModel {
     if (affectedRows === 0) return null;
 
     return 'Finished';
+  }
+
+  async updateMatchScore(newMatchScore: MatchScoreReqType, id:number): Promise<string | null> {
+    const [affectedRows] = await this.model.update(newMatchScore, { where: { id } });
+
+    if (affectedRows === 0) return null;
+
+    return 'Score updated';
   }
 }
