@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import MatchController from '../controllers/MatchController';
+import ValidateAuth from '../middlewares/validateAuthTokenMiddleware';
 
 const matchController = new MatchController();
 
@@ -14,5 +15,11 @@ router.get('/', (req: Request, res: Response) => {
 
   return matchController.getAllMatches(req, res);
 });
+
+router.patch(
+  '/:id/finish',
+  ValidateAuth.validateAuthToken,
+  (req: Request, res: Response) => matchController.updateMatchEnd(req, res),
+);
 
 export default router;

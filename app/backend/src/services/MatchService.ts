@@ -17,4 +17,15 @@ export default class MatchService {
     const allByInProgress = await this.matchModel.findAllByInProgress(inProgress);
     return { status: 'SUCCESSFUL', data: allByInProgress };
   }
+
+  public async updateMatchEnd(id: number): Promise<ServiceRes<{ message: string }>> {
+    const updateMatchRes = await this.matchModel.updateMatchEnd(id);
+    if (updateMatchRes === null) {
+      return {
+        status: 'BAD_REQUEST',
+        data: { message: 'Match already finished or incorrect id' },
+      };
+    }
+    return { status: 'SUCCESSFUL', data: { message: updateMatchRes } };
+  }
 }

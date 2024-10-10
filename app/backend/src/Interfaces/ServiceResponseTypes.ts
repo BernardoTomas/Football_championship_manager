@@ -1,6 +1,6 @@
 export type ServiceErrData = { message: string };
 
-type ServiceResStatusErrType = 'INVALID_DATA' | 'UNAUTHORIZED' | 'NOT_FOUND' | 'CONFLICT';
+type ServiceResStatusErrType = 'BAD_REQUEST' | 'UNAUTHORIZED' | 'NOT_FOUND' | 'CONFLICT';
 
 export type ServiceResErr = {
   status: ServiceResStatusErrType;

@@ -27,4 +27,12 @@ export default class MatchModel implements IMatchModel {
 
     return data;
   }
+
+  async updateMatchEnd(id: number): Promise<string | null> {
+    const [affectedRows] = await this.model.update({ inProgress: false }, { where: { id } });
+
+    if (affectedRows === 0) return null;
+
+    return 'Finished';
+  }
 }

@@ -18,4 +18,10 @@ export default class MatchController {
     const serviceRes = await this.matchService.getAllByInProgress(inProgressBool);
     return res.status(mapStatusHTTP(serviceRes.status)).json(serviceRes.data);
   }
+
+  public async updateMatchEnd(req: Request, res: Response) {
+    const { id } = req.params;
+    const serviceRes = await this.matchService.updateMatchEnd(Number(id));
+    return res.status(mapStatusHTTP(serviceRes.status)).json(serviceRes.data);
+  }
 }
