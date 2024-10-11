@@ -5,9 +5,6 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import Match from '../database/models/SequelizeMatchModel';
-
-import { Response } from 'superagent';
-import IMatch from '../Interfaces/IMatch';
 import Team from '../database/models/SequelizeTeamModel';
 
 chai.use(chaiHttp);

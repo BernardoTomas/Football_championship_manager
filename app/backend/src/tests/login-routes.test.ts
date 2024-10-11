@@ -6,8 +6,6 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import User from '../database/models/SequelizeUserModel';
 
-import { Response } from 'superagent';
-import ValidationMiddleware from '../middlewares/verifyLoginMiddleware';
 import { decode } from 'jsonwebtoken';
 
 chai.use(chaiHttp);
