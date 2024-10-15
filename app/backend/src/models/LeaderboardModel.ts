@@ -1,26 +1,19 @@
-import { Sequelize, QueryTypes } from 'sequelize';
+import { QueryTypes } from 'sequelize';
 import ILeaderboardModel, { LeaderboardObjectType } from '../Interfaces/ILeaderboardModel';
 import {
   getCompleteLbFinished,
   getHomeTeamLbFinished,
   getAwayTeamLbFinished,
 } from './SQL/getLeaderboardQueries';
+import sequelize from '../database/models';
 
 export default class LeaderboardModel implements ILeaderboardModel {
   constructor(
-    private sequelize = new Sequelize(
-      'TRYBE_FUTEBOL_CLUBE',
-      process.env.DB_USER || 'root',
-      process.env.DB_PASS || '123456',
-      {
-        host: process.env.DB_HOST,
-        dialect: 'mysql',
-      },
-    ),
+    private _sequelize = sequelize,
   ) {}
 
   async getLeaderboard(): Promise<LeaderboardObjectType[]> {
-    const leaderboard: LeaderboardObjectType[] = await this.sequelize.query(
+    const leaderboard: LeaderboardObjectType[] = await this._sequelize.query(
       getCompleteLbFinished,
       {
         type: QueryTypes.SELECT,
@@ -31,7 +24,7 @@ export default class LeaderboardModel implements ILeaderboardModel {
   }
 
   async getHomeLeaderboard(): Promise<LeaderboardObjectType[]> {
-    const homeLeaderboard: LeaderboardObjectType[] = await this.sequelize.query(
+    const homeLeaderboard: LeaderboardObjectType[] = await this._sequelize.query(
       getHomeTeamLbFinished,
       {
         type: QueryTypes.SELECT,
@@ -42,7 +35,7 @@ export default class LeaderboardModel implements ILeaderboardModel {
   }
 
   async getAwayLeaderboard(): Promise<LeaderboardObjectType[]> {
-    const awayLeaderboard: LeaderboardObjectType[] = await this.sequelize.query(
+    const awayLeaderboard: LeaderboardObjectType[] = await this._sequelize.query(
       getAwayTeamLbFinished,
       {
         type: QueryTypes.SELECT,
