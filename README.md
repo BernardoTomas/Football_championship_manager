@@ -58,3 +58,8 @@ To run the tests, use the following command:
 cd app/backend
 npm run test
 ```
+
+## Acknowledgements
+
+This project was developed as part of the Trybe curriculum.
+All files and configurations except the backend directory were provided by Trybe.
