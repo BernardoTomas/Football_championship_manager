@@ -24,7 +24,7 @@ Trybe Futebol Clube is a project developed to manage football teams, matches, an
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/trybe-futebol-clube.git
+    git clone git@github.com:BernardoTomas/Football_championship_manager.git
     cd trybe-futebol-clube
     ```
 2. Set up the project:
